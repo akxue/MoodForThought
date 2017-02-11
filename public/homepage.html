@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="homestyle.css">
 	<script src="http://www.webglearth.com/v2/api.js"></script>
 	<script>
+	var earth;
       function initialize() {
         var options = {
           sky: true,
@@ -17,7 +18,7 @@
           zoom: 2
         };
         earth = new WE.map('earth_div', options);
-        var natural = WE.tileLayer('http://data.webglearth.com/natural-earth-color/{z}/{x}/{y}.jpg', {
+        var natural = WE.tileLayer('http://data.webglearth.com/NASA-Blue-Marble/{z}/{x}/{y}.jpg', {
           tileSize: 256,
           tms: true
         });
@@ -28,6 +29,16 @@
           opacity: 0.6
         });
         toner.addTo(earth);
+
+        // Start a simple rotation animation
+        var before = null;
+        requestAnimationFrame(function animate(now) {
+            var c = earth.getPosition();
+            var elapsed = before? now - before: 0;
+            before = now;
+            earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
+            requestAnimationFrame(animate);
+        });
       }
     </script>
     <style>
