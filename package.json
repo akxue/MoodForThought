@@ -1,0 +1,23 @@
+{
+  "name": "Letters",
+  "version": "1.0.0",
+  "description": "HOTH2",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/akxue/HotH2.git"
+  },
+  "author": "Anthony Xue",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/akxue/HotH2/issues"
+  },
+  "homepage": "https://github.com/akxue/HotH2#readme",
+  "dependencies": {
+    "express": "^4.14.1"
+  }
+}
