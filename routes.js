@@ -9,6 +9,7 @@ router.use(function(req, res, next){
 });
 
 router.get('/', function(req, res){
+	console.log(__dirname);
 	res.sendFile(__dirname + '/public/homepage.html');
 });
 

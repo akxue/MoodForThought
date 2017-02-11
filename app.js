@@ -2,7 +2,9 @@
 const express = require('express');
 /* Initialize express app */
 const app = express();
-const routes = require('./api/routes.js')
+const routes = require('./routes.js')
+const mongoose = require('mongoose');
+const mongodb = require('mongodb');
 
 app.use(express.static(__dirname + '/public'));
 
