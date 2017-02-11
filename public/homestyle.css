@@ -22,13 +22,11 @@ html {
 
 
 	input.search {
-		background: #FFFFFC;
+		background: rgba(255, 255, 252, 0.5);
 		margin: 0;
 		/*default left-aligned text*/
 		outline: 0;
-		opacity: 0.5;
-		border: 0;
-		border: 0px solid #F7F7F7;
+		border: 10px solid rgba(66, 66, 66, 0.9);
 		width: 120%;
 		left: -10%;
 		position: relative;
@@ -36,7 +34,14 @@ html {
 		z-index: 2;
 		border-radius: 5px;
 		font-size: 40px;
-
-		/*sneakily use box-shadow as an opaque "border"*/
-		 box-shadow: 0px 0px 0px 5px rgba(172, 172,172, 1.0);
+		 /*-webkit-transition: width 2s, height 2s, background-color 2s, -webkit-transform 2s;*/
+    	/*transition: width 2s, height 2s, background-color 2s, transform 2s;*/
+    	transition-duration: 0.25s;
+    	transition-timing-function: easeInOutCubic;
 	}
+
+	input.search:hover {
+		background: rgba(255, 255, 252, 0.8);
+		border: 10px solid rgba(66, 66, 66, 0.9);
+
+	};
