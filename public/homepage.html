@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang ="en">
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 	<meta charset="UTF-8">
 	<title></title>
 	<link rel="stylesheet" href="homestyle.css">
@@ -52,8 +53,117 @@
 
 
 		<form class="search-form">
-		<input type="text" class="search" 
-		placeholder="What is your mood?">
+		<input id="mood" type="text" class="search"
+		placeholder="How are you feeling?"
+		name="sender">
+		<button style="width: 50px; height: 50px; background: white; z-index: 10000; position: relative;" id="submit" type="button" name="button"></button>
 	</form>
 
 </body>
+
+<script>
+$("#submit").click(function(e) {
+	e.preventDefault();
+	e.which = e.which || e.keyCode;
+	console.log('submitting')
+
+	// var inp = { "mood" : "tired" };
+	var m = $("input#mood").val()
+	console.log(m);
+	var input = { "mood" : m }
+	// var inp = $("input[name=sender]").val()
+	$.ajax({
+	  type: "POST",
+	  url: "http://localhost:8080/test",
+	  data: JSON.stringify(input),
+	  contentType: "application/json",
+	  success: function() {
+		  console.log('success')
+	  },
+	  error: function() {
+		  console.log('error');
+	  }
+	});
+	// $.post("http://localhost:8080", {mood = $("input[name=sender]").val()});
+	// alert("FORM WAS SUBMITTED");
+
+
+})
+
+// function handle(e) {
+// 	e.preventDefault();
+// 	e.which = e.which || e.keyCode;
+// 	console.log('submitting')
+//
+// 	var inp = { "mood" : "tired" };
+// 	if (e.which == 13) {
+// 		// var inp = $("input[name=sender]").val()
+// 		$.ajax({
+// 		  type: "POST",
+// 		  url: "http://localhost:8080/test",
+// 		  data: JSON.stringify(inp),
+// 		  contentType: "application/json",
+// 		  success: function() {
+// 			  console.log('success')
+// 		  },
+// 		  error: function() {
+// 			  console.log('error');
+// 		  }
+// 		});
+// 		// $.post("http://localhost:8080", {mood = $("input[name=sender]").val()});
+// 		alert("FORM WAS SUBMITTED");
+//
+// 	}
+// 	// Otherwise the form will be submitted
+// 	// var user_mood = $("input[name=sender]").val();
+// 	// alert(user_mood);
+//
+// }
+
+// $(document).ready(function() {
+// 	$('#submit').on('submit', function(e) {
+// 		e.preventDefault();
+// 		console.log('submitting')
+// 		// Otherwise the form will be submitted
+// 		// var user_mood = $("input[name=sender]").val();
+// 		// alert(user_mood);
+// 		var inp = $("input[name=sender]").val()
+// 		$.ajax({
+// 		  type: "POST",
+// 		  url: "/test",
+// 		  data: {
+// 			 "mood" : inp
+// 		  },
+// 		  success: function() {
+// 			  console.log('success')
+// 		  },
+// 		  error: function() {
+// 			  console.log('error');
+// 		  }
+// 		});
+// 		// $.post("http://localhost:8080", {mood = $("input[name=sender]").val()});
+// 		alert("FORM WAS SUBMITTED");
+// 	})
+// })
+	// function handle(e){
+    //     if(e.keyCode == 13){
+	// 		e.preventDefault();
+	// 		// Otherwise the form will be submitted
+	// 		// var user_mood = $("input[name=sender]").val();
+	// 		// alert(user_mood);
+	// 		var inp = $("input[name=sender]").val()
+	// 		$.ajax({
+	// 		  type: "POST",
+	// 		  url: "/",
+	// 		  data: {
+	// 			  mood: inp
+	// 		  },
+	// 		  success: function() {
+	// 			  console.log('success')
+	// 		  }
+	// 		});
+	// 		// $.post("http://localhost:8080", {mood = $("input[name=sender]").val()});
+	// 		alert("FORM WAS SUBMITTED");
+    // 	}
+	// }
+</script>

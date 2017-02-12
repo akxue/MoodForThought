@@ -13,19 +13,23 @@ router.use(function(req, res, next){
 	next();
 });
 
+/* When they input mood, we find json that match */
+router.post('/test', function(req, res){
+	// console.log(user_mood);
+	var user_mood = req.body.mood;
+	console.log(req.body);
+	//res.json({mood: user_mood});
+	findDocuments(datab, user_mood, function(){
+
+	});
+
+});
+
 router.get('/', function(req, res){
 	console.log(__dirname);
 	res.sendFile(__dirname + '/public/homepage.html');
 });
 
-/* When they input mood, we find json that match */
-router.get('/:mood', function(req, res){
-	var user_mood = req.params.mood;
-	//res.json({mood: user_mood});
-	var docs = []
-	findDocuments(datab, user_mood, res, function(){
-	});
-});
 
 router.get('/post/:mood-:description', function(req, res){
 	var user_mood = req.params.mood;
@@ -58,15 +62,14 @@ var insertDocuments = function(db, user_desc, user_mood, callback) {
   });
 }
 
-var findDocuments = function(db, my_mood, res, callback) {
+var findDocuments = function(db, my_mood, callback) {
   // Get the documents collection
   var collection = db.collection('documents');
   // Find some documents
   collection.find({'mood' : my_mood}).toArray(function(err, docs) {
     assert.equal(err, null);
-    // console.log("Found the following records");
-    // console.log(docs);
-	res.send(docs);
+    console.log("Found the following records");
+    console.log(docs);
     callback(docs);
   });
 }
