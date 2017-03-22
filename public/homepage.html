@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="homestyle.css">
+	<script src="http://www.webglearth.com/v2/api.js"></script>
+	<script>
+	var earth;
+      function initialize() {
+        var options = {
+          sky: true,
+          atmosphere: true,
+          dragging: true,
+          tilting: true,
+          zooming: false,
+          center: [46.8011, 8.2266],
+          zoom: 2
+        };
+        earth = new WE.map('earth_div', options);
+        var natural = WE.tileLayer('http://data.webglearth.com/NASA-Blue-Marble/{z}/{x}/{y}.jpg', {
+          tileSize: 256,
+          tms: true
+        });
+        natural.addTo(earth);
+
+        var toner = WE.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.png', {
+          attribution: 'Map tiles by Stamen Design, under CC BY 3.0. Data by OpenStreetMap, under CC BY SA.',
+          opacity: 0.6
+        });
+        toner.addTo(earth);
+
+        // Start a simple rotation animation
+        var before = null;
+        requestAnimationFrame(function animate(now) {
+            var c = earth.getPosition();
+            var elapsed = before? now - before: 0;
+            before = now;
+            earth.setCenter([c[0], c[1] + 0.1*(elapsed/30)]);
+            requestAnimationFrame(animate);
+        });
+      }
+    </script>
+    <style>
+      html, body{padding: 0; margin: 0;}
+      #earth_div{top: 0; right: 0; bottom: 0; left: 0; position: absolute !important;}
+    </style>
+</head>
+<body onload="initialize()">
+    <div id="earth_div"></div>
+</body>
+
+
+	<form class="search-form">
+		<input id="mood" type="text" class="search"
+		placeholder="How are you feeling?"
+		name="sender">
+
+	</form>
+
+	<div id="submit">
+		<button style="width: 50px; height: 50px; background: white; z-index: 10000; position: relative; left: 70%; top: 120px" id="submit" type="button" name="button"></button>
+	</div>
+
+</body>
+
+<script>
+$("#submit").click(function(e) {
+	e.preventDefault();
+	e.which = e.which || e.keyCode;
+	console.log('submitting')
+
+	// var inp = { "mood" : "tired" };
+	var m = $("input#mood").val()
+	console.log(m);
+	var input = { "mood" : m }
+	// var inp = $("input[name=sender]").val()
+	$.ajax({
+	  type: "POST",
+	  url: "http://localhost:8080/test",
+	  data: JSON.stringify(input),
+	  contentType: "application/json",
+	  success: function() {
+		  console.log('success')
+	  },
+	  error: function() {
+		  console.log('error');
+	  }
+	});
+	// $.post("http://localhost:8080", {mood = $("input[name=sender]").val()});
+	// alert("FORM WAS SUBMITTED");
+
+
+})
+
+// function handle(e) {
+// 	e.preventDefault();
+// 	e.which = e.which || e.keyCode;
+// 	console.log('submitting')
+//
+// 	var inp = { "mood" : "tired" };
+// 	if (e.which == 13) {
+// 		// var inp = $("input[name=sender]").val()
+// 		$.ajax({
+// 		  type: "POST",
+// 		  url: "http://localhost:8080/test",
+// 		  data: JSON.stringify(inp),
+// 		  contentType: "application/json",
+// 		  success: function() {
+// 			  console.log('success')
+// 		  },
+// 		  error: function() {
+// 			  console.log('error');
+// 		  }
+// 		});
+// 		// $.post("http://localhost:8080", {mood = $("input[name=sender]").val()});
+// 		alert("FORM WAS SUBMITTED");
+//
+// 	}
+// 	// Otherwise the form will be submitted
+// 	// var user_mood = $("input[name=sender]").val();
+// 	// alert(user_mood);
+//
+// }
+
+// $(document).ready(function() {
+// 	$('#submit').on('submit', function(e) {
+// 		e.preventDefault();
+// 		console.log('submitting')
+// 		// Otherwise the form will be submitted
+// 		// var user_mood = $("input[name=sender]").val();
+// 		// alert(user_mood);
+// 		var inp = $("input[name=sender]").val()
+// 		$.ajax({
+// 		  type: "POST",
+// 		  url: "/test",
+// 		  data: {
+// 			 "mood" : inp
+// 		  },
+// 		  success: function() {
+// 			  console.log('success')
+// 		  },
+// 		  error: function() {
+// 			  console.log('error');
+// 		  }
+// 		});
+// 		// $.post("http://localhost:8080", {mood = $("input[name=sender]").val()});
+// 		alert("FORM WAS SUBMITTED");
+// 	})
+// })
+	// function handle(e){
+    //     if(e.keyCode == 13){
+	// 		e.preventDefault();
+	// 		// Otherwise the form will be submitted
+	// 		// var user_mood = $("input[name=sender]").val();
+	// 		// alert(user_mood);
+	// 		var inp = $("input[name=sender]").val()
+	// 		$.ajax({
+	// 		  type: "POST",
+	// 		  url: "/",
+	// 		  data: {
+	// 			  mood: inp
+	// 		  },
+	// 		  success: function() {
+	// 			  console.log('success')
+	// 		  }
+	// 		});
+	// 		// $.post("http://localhost:8080", {mood = $("input[name=sender]").val()});
+	// 		alert("FORM WAS SUBMITTED");
+    // 	}
+	// }
+</script>
